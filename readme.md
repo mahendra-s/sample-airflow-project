@@ -1,7 +1,7 @@
 # Apache Airflow Sample Project
 
-Airflow getting started [document](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html)
-Airflow Docker-Compose File
+Airflow getting started [document](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html). Airflow
+Docker-Compose File
 
 ```
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.1.2/docker-compose.yaml'
@@ -33,6 +33,42 @@ Stop and remove all volumes
 
 ```
 docker-compose down --volumes --rmi all
+```
+
+## Mysql DB backend setup
+
+1. Disabled postgres db set via config variable, service and dependency service
+2. Setting MySql database on one of the host MySql Database
+   setup [link](http://airflow.apache.org/docs/apache-airflow/stable/howto/set-up-database.html#setting-up-a-mysql-database)
+3. Create database schema and user as
+
+```
+CREATE DATABASE airflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'airflow_user' IDENTIFIED BY 'airflow_pass';
+GRANT ALL PRIVILEGES ON airflow_db.* TO 'airflow_user';
+```
+
+4. Setting database connection string via config as
+
+```
+[core]
+sql_alchemy_conn = mysql+mysqldb://airflow_user:airflow_pass@192.168.1.9:3306/airflow_db
+[celery
+result_backend = db+mysql://airflow_user:airflow_pass@192.168.1.9/airflow_db
+```
+
+5. Setup DDL schema via
+
+```
+docker-compose up airflow-init
+or
+./airflow.sh db init
+```
+
+6. Start airflow
+
+```
+ docker-compose up
 ```
 
 ## Some FAQ
