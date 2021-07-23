@@ -1,9 +1,9 @@
 # Apache Airflow Sample Project
 
-Airflow getting started (document)[https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html]
+Airflow getting started [document](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html)
 Airflow Docker-Compose File
 
-```commandline
+```
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.1.2/docker-compose.yaml'
 ```
 
@@ -39,12 +39,11 @@ docker-compose down --volumes --rmi all
 
 ### Airflow config
 
-configurations-ref (link)[https://airflow.apache.org/docs/apache-airflow/stable/configurations-ref.html]
+configurations-ref [link](https://airflow.apache.org/docs/apache-airflow/stable/configurations-ref.html)
 
 ### Why is task not getting scheduled?
 
-(
-why-isn-t-my-task-getting-scheduled)[https://airflow.apache.org/docs/apache-airflow/stable/faq.html#why-isn-t-my-task-getting-scheduled]
+[why-isn-t-my-task-getting-scheduled](https://airflow.apache.org/docs/apache-airflow/stable/faq.html#why-isn-t-my-task-getting-scheduled)
 
 Quick Summary Airflow can be a bit tricky to setup.
 
