@@ -38,9 +38,23 @@ docker-compose down --volumes --rmi all
 ## Mysql DB backend setup
 
 1. Disabled postgres db set via config variable, service and dependency service
-2. Setting MySql database on one of the host MySql Database
+2. Download and start MySql Docker
+
+```
+   docker pull mysql
+   docker run --name mysql-for-airflow -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql
+```
+
+or start with initial airflow_user setup
+
+```
+   docker run --name mysql-for-airflow -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=airflow_db -e MYSQL_USER=airflow_user -e MYSQL_PASSWORD=airflow_pass -d mysql
+```
+
+3. Setting MySql database on one of the host MySql Database
    setup [link](http://airflow.apache.org/docs/apache-airflow/stable/howto/set-up-database.html#setting-up-a-mysql-database)
-3. Create database schema and user as
+
+4. Create database schema and user (optional if already created) as
 
 ```
 CREATE DATABASE airflow_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -48,7 +62,7 @@ CREATE USER 'airflow_user' IDENTIFIED BY 'airflow_pass';
 GRANT ALL PRIVILEGES ON airflow_db.* TO 'airflow_user';
 ```
 
-4. Setting database connection string via config as
+5. Setting database connection string via config as
 
 ```
 [core]
@@ -57,15 +71,15 @@ sql_alchemy_conn = mysql+mysqldb://airflow_user:airflow_pass@192.168.1.9:3306/ai
 result_backend = db+mysql://airflow_user:airflow_pass@192.168.1.9/airflow_db
 ```
 
-5. Setup DDL schema via
+6. Setup DDL schema via
 
 ```
-docker-compose up airflow-init
-or
 ./airflow.sh db init
+or
+docker-compose up airflow-init
 ```
 
-6. Start airflow
+7. Start airflow
 
 ```
  docker-compose up
